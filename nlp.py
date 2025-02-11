@@ -6,7 +6,12 @@ import re
 import nltk # --> This lib will help to remove the unnecessary words which are not required in our prediction
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
+from sklearn.naive_bayes import GaussianNB # --> For Naive Bayes Model
+from sklearn.ensemble import RandomForestClassifier # --> For Decision Tree Model
+from sklearn.neighbors import KNeighborsClassifier # --> For K-NN model
+from sklearn.linear_model import LogisticRegression # --> For Logistic Regression Model
+from sklearn.tree import DecisionTreeClassifier # --> For Random Forest model
+from sklearn.svm import SVC # --> For Support Vector Machine Model
 from sklearn.metrics import confusion_matrix, accuracy_score
 # Import the dataset
 dataset = pd.read_csv("Restaurant_Reviews.tsv", delimiter = '\t', quoting = 3)
@@ -42,9 +47,34 @@ y = dataset.iloc[:, -1].values
 # Split the dataset into training and test set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
+# Commented classification methods of the classification
+# models to test each classification models for the 
+# NLP, where we can also test accuray fit of the classification
+# methods for the perfect fit for this project
+
 # Train the Naive Base model on the Training Set
 classifier = GaussianNB()
 classifier.fit(X_train, y_train)
+
+'''# Train the Decision Tree model on the Training set
+classifier = RandomForestClassifier(n_estimators=10, criterion='entropy', random_state=0)
+classifier,fit(X_train, y_train)'''
+
+'''# Train the K-NN model on the Training set
+classifier = KNeighborsClassifier(n_neighbors=5, p=2, metric='minkowski')
+classifier.fit(X_train, y_train)'''
+
+'''# Train the Logistic Regression model on the Training set
+classifier = LogisticRegression(random_state=0)
+classifier.fit(X_train, y_train)'''
+
+'''# Train the Random Forest model on the Training set
+classifier = RandomForestClassifier(criterion='entropy', random_state=0)
+classifier.fit(X_train, y_train)'''
+
+'''# Train the Support Vector model on the Training set
+classifier = SVC(kernel='linear', random_state=0)
+classifier.fit(X_train, y_train)'''
 
 # Predict the Test set result
 y_pred = classifier.predict(X_test)
